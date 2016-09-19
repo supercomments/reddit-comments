@@ -1,6 +1,6 @@
 {
   "name": "reddit-comments",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Reddit Comments (using snoocore) with Disqus markup",
   "main": "dist/reddit-comments.min.js",
   "scripts": {
