@@ -1,0 +1,54 @@
+{
+  "name": "reddit-comments",
+  "version": "1.0.0",
+  "description": "Reddit Comments (using snoocore) with Disqus markup",
+  "main": "dist/reddit-comments.min.js",
+  "scripts": {
+    "start": "webpack-dev-server --config ./webpack/webpack.config.dev.babel.js --port 3000 --hot --content-base ./dev",
+    "build:umd": "export NODE_ENV=production && webpack --config ./webpack/webpack.config.prod.babel.js",
+    "lint": "eslint ./src"
+  },
+  "author": "Tomas Weiss <tomasw@salsitasoft.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.14.0",
+    "babel-eslint": "^6.1.2",
+    "babel-loader": "^6.2.5",
+    "babel-polyfill": "^6.13.0",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-2": "^6.13.0",
+    "eslint": "^3.5.0",
+    "eslint-config-airbnb": "^11.1.0",
+    "eslint-import-resolver-webpack": "^0.6.0",
+    "eslint-plugin-import": "^1.15.0",
+    "eslint-plugin-jsx-a11y": "^2.2.2",
+    "eslint-plugin-react": "^6.2.2",
+    "file-loader": "^0.9.0",
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.16.1"
+  },
+  "dependencies": {
+    "classnames": "^2.2.5",
+    "html-entities": "^1.2.0",
+    "lodash": "^4.15.0",
+    "moment": "^2.15.0",
+    "normalizr": "^2.2.1",
+    "react-click-outside": "^2.1.0",
+    "react-loader": "^2.4.0",
+    "react-moment-proptypes": "^1.2.0",
+    "react-redux": "^4.4.5",
+    "redux": "^3.6.0",
+    "redux-logger": "^2.6.1",
+    "redux-saga": "^0.11.1",
+    "reselect": "^2.5.4",
+    "snoocore": "^3.3.1"
+  },
+  "peerDependencies": {
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1"
+  }
+}
