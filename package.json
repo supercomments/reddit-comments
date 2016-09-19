@@ -6,7 +6,11 @@
   "scripts": {
     "start": "webpack-dev-server --config ./webpack/webpack.config.dev.babel.js --port 3000 --hot --content-base ./dev",
     "build:umd": "export NODE_ENV=production && webpack --config ./webpack/webpack.config.prod.babel.js",
-    "lint": "eslint ./src"
+    "lint": "eslint ./src",
+    "preversion": "npm run lint",
+    "version": "npm run build:umd",
+    "postversion": "git push && git push --tags",
+    "prepublish": "npm run build:umd"
   },
   "author": "Tomas Weiss <tomasw@salsitasoft.com>",
   "license": "MIT",
