@@ -71,6 +71,16 @@ export const tokenExpiration = () => new Promise((res) => {
   reddit.on('access_token_expired', cb);
 });
 
+export const getBestRedditPost = url =>
+  reddit('/search.json')
+    .get({
+      q: `url:${url}`
+    })
+    .then((listing) => {
+      const sortedByScore = listing.data.children.sort((a, b) => b.data.score - a.data.score);
+      return sortedByScore.length > 0 ? sortedByScore[0].data : null;
+    });
+
 export const fetchComments = (postId, sort) =>
   reddit(`/comments/${postId}.json`)
     .get({ sort: MapSortToRedditSort[sort] })

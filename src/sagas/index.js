@@ -4,7 +4,6 @@ import { fork } from 'redux-saga/effects';
 import * as Actions from 'constants/actions';
 import {
   onLogin,
-  restoreSession,
   onLoggedIn
 } from 'sagas/authenticationSaga';
 import {
@@ -14,14 +13,13 @@ import {
   onToggleUpvote,
   onToggleDownvote
 } from 'sagas/threadSaga';
-
 import changeCommentCountSaga from 'sagas/changeCommentCountSaga';
+import onSetup from 'sagas/setupSaga';
 
 export default function* () {
   yield [
     fork(changeCommentCountSaga),
-    fork(takeEvery, Actions.Setup, restoreSession),
-    fork(takeEvery, Actions.Setup, fetchCommentsWithThrobber),
+    fork(takeEvery, Actions.Setup, onSetup),
     fork(takeEvery, Actions.LoggedIn, onLoggedIn),
     fork(takeEvery, Actions.LogIn, onLogin),
     fork(takeEvery, Actions.Sort, fetchCommentsWithThrobber),

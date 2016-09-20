@@ -5,7 +5,7 @@ const doRender = () => {
   const Root = require('./containers').default;
 
   render(
-    <Root />,
+    <Root url="https://google.com" />,
     document.getElementById('root')
   );
 };

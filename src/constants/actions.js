@@ -1,4 +1,5 @@
 export const Setup = 'Setup';
+export const RedditPostIdHasChanged = 'RedditPostIdHasChanged';
 export const ChangeCommentCount = 'ChangeCommentCount';
 
 export const LogIn = 'LogIn';

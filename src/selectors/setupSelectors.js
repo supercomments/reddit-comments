@@ -9,3 +9,8 @@ export const getRedditId = createSelector(
   setup => setup.id
 );
 
+// Gets URL of the reddit thread
+export const getUrl = createSelector(
+  getSetup,
+  setup => setup.url
+);

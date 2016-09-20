@@ -10,6 +10,12 @@ export default (state = {}, action) => {
     case Actions.Setup:
       return payload;
 
+    case Actions.RedditPostIdHasChanged:
+      return {
+        ...state,
+        id: payload
+      };
+
     default:
       return state;
   }
