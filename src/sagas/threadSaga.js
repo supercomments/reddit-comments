@@ -8,7 +8,7 @@ import * as Entities from 'constants/entities';
 import { withThrobber } from 'sagas/throbberSaga';
 import { optimisticallyCreateEntity, optimisticallUpdateEntity } from 'sagas/entityRepositorySaga';
 import { getSort, getReplyForm } from 'selectors/threadSelectors';
-import { getThread, getPost } from 'selectors/entityRepositorySelectors';
+import { getThread, getPost, getCommentsCount } from 'selectors/entityRepositorySelectors';
 import { getAuthenticatedUser } from 'selectors/authenticationSelectors';
 import { getRedditId } from 'selectors/setupSelectors';
 
@@ -23,6 +23,9 @@ export function* fetchComments() {
 
   yield put(buildAction(Actions.EntitiesHaveChanged, entities));
   yield put(buildAction(Actions.PostHasBeenLoaded, result));
+
+  const commentsCount = yield select(getCommentsCount);
+  yield put(buildAction(Actions.ChangeCommentCount, commentsCount));
 }
 
 export function* fetchCommentsWithThrobber() {
@@ -39,7 +42,10 @@ export function* onSubmit({ payload }) {
     Entities.Comment,
     submitComment,
     function* createEntity() {
+      const commentsCount = yield select(getCommentsCount);
+
       yield put(buildAction(Actions.SendReplyForm, threadId));
+      yield put(buildAction(Actions.ChangeCommentCount, commentsCount + 1));
 
       const { text } = yield select(appState => getReplyForm(appState, threadId));
 
@@ -60,7 +66,10 @@ export function* onSubmit({ payload }) {
       text: entity.body
     }),
     function* onRollback() {
+      const commentsCount = yield select(getCommentsCount);
+
       yield put(buildAction(Actions.SendingReplyFormFailed, threadId));
+      yield put(buildAction(Actions.ChangeCommentCount, commentsCount - 1));
     },
     actionPayload => actionPayload.entityType === Entities.Comment && actionPayload.id === threadId
   );

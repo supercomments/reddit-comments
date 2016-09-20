@@ -1,4 +1,5 @@
 export const Setup = 'Setup';
+export const ChangeCommentCount = 'ChangeCommentCount';
 
 export const LogIn = 'LogIn';
 export const LoggedIn = 'LoggedIn';

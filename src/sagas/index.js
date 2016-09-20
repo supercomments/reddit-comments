@@ -15,8 +15,11 @@ import {
   onToggleDownvote
 } from 'sagas/threadSaga';
 
+import changeCommentCountSaga from 'sagas/changeCommentCountSaga';
+
 export default function* () {
   yield [
+    fork(changeCommentCountSaga),
     fork(takeEvery, Actions.Setup, restoreSession),
     fork(takeEvery, Actions.Setup, fetchCommentsWithThrobber),
     fork(takeEvery, Actions.LoggedIn, onLoggedIn),
