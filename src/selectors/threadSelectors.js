@@ -1,5 +1,8 @@
 import { createSelector } from 'reselect';
 
+export const NonExistingRedditPostThreadId = 'NonExisting';
+
+
 // Gets the appropriate slice in the global app state
 const getThread = appState => appState.thread;
 
@@ -7,7 +10,16 @@ const getThread = appState => appState.thread;
 export const getReplyForm = createSelector(
   getThread,
   (appState, threadId) => threadId,
-  (thread, threadId) => thread.replyForms[threadId]
+  (thread, threadId) => {
+    if (threadId === NonExistingRedditPostThreadId) {
+      return {
+        root: true,
+        visible: true
+      };
+    } else {
+      return thread.replyForms[threadId];
+    }
+  }
 );
 
 // Gets current sort

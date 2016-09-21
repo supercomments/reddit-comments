@@ -14,7 +14,7 @@ import {
   onToggleDownvote
 } from 'sagas/threadSaga';
 import changeCommentCountSaga from 'sagas/changeCommentCountSaga';
-import onSetup from 'sagas/setupSaga';
+import onSetup, { onStartPostingLinkToReddit } from 'sagas/setupSaga';
 
 export default function* () {
   yield [
@@ -26,6 +26,7 @@ export default function* () {
     fork(takeEvery, Actions.SubmitReply, onSubmit),
     fork(takeEvery, Actions.ToggleUpvotePost, onToggleUpvotePost),
     fork(takeEvery, Actions.ToggleUpvote, onToggleUpvote),
-    fork(takeEvery, Actions.ToggleDownvote, onToggleDownvote)
+    fork(takeEvery, Actions.ToggleDownvote, onToggleDownvote),
+    fork(takeEvery, Actions.UserStartsPostingLinkToReddit, onStartPostingLinkToReddit)
   ];
 }

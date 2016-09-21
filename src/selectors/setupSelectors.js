@@ -14,3 +14,15 @@ export const getUrl = createSelector(
   getSetup,
   setup => setup.url
 );
+
+// Determines whether post exists on Reddit
+export const isExistingPost = createSelector(
+  getSetup,
+  setup => !!setup.postExistsOnReddit
+);
+
+// Determines whether user has tried to post the link to Reddit
+export const isCreatingPostOnReddit = createSelector(
+  getSetup,
+  setup => !!setup.creatingPostOnReddit
+);

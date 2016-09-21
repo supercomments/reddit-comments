@@ -4,10 +4,11 @@ import { connect } from 'react-redux';
 import buildActionCreators from 'helpers/buildActionCreators';
 import * as Actions from 'constants/actions';
 import * as Sort from 'constants/sort';
-import { getSort } from 'selectors/threadSelectors';
+import { getSort, NonExistingRedditPostThreadId } from 'selectors/threadSelectors';
 import { getCommentsCount, getPost } from 'selectors/entityRepositorySelectors';
 import { isLoading } from 'selectors/throbberSelectors';
 import { isAuthenticated } from 'selectors/authenticationSelectors';
+import { isExistingPost } from 'selectors/setupSelectors';
 
 import Throbber from 'components/Throbber';
 import LayoutWrapper from 'components/LayoutWrapper';
@@ -20,6 +21,7 @@ import ReplyForm from 'containers/ReplyForm';
 const RedditComments = ({
   loading,
   post,
+  existsOnReddit,
   commentsCount,
   selectedSort,
   sortBest,
@@ -27,8 +29,14 @@ const RedditComments = ({
   sortOldest,
   toggleUpvotePost
 }) => {
-  if (!post || loading) {
+  if (loading) {
     return <Throbber />;
+  } else if (!existsOnReddit) {
+    return (
+      <LayoutWrapper>
+        <ReplyForm threadId={NonExistingRedditPostThreadId} />
+      </LayoutWrapper>
+    );
   } else {
     return (
       <LayoutWrapper>
@@ -61,6 +69,7 @@ RedditComments.propTypes = {
   commentsCount: PropTypes.number.isRequired,
   selectedSort: PropTypes.string.isRequired,
   post: PropTypes.object,
+  existsOnReddit: PropTypes.bool.isRequired,
   sortBest: PropTypes.func.isRequired,
   sortNewest: PropTypes.func.isRequired,
   sortOldest: PropTypes.func.isRequired,
@@ -72,7 +81,8 @@ const mapStateToProps = appState => ({
   loading: isLoading(appState),
   selectedSort: getSort(appState),
   commentsCount: getCommentsCount(appState),
-  post: getPost(appState)
+  post: getPost(appState),
+  existsOnReddit: isExistingPost(appState)
 });
 
 export default connect(

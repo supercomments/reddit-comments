@@ -5,7 +5,7 @@ const doRender = () => {
   const Root = require('./containers').default;
 
   render(
-    <Root url="https://google.com" />,
+    <Root url="http://blog.javascripting.com/2015/04/17/library-of-the-week-autosize" />,
     document.getElementById('root')
   );
 };
