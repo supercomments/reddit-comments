@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Loader from 'react-loader';
 
 import buildActionCreators from 'helpers/buildActionCreators';
 import * as Actions from 'constants/actions';
@@ -10,6 +9,7 @@ import { getCommentsCount, getPost } from 'selectors/entityRepositorySelectors';
 import { isLoading } from 'selectors/throbberSelectors';
 import { isAuthenticated } from 'selectors/authenticationSelectors';
 
+import Throbber from 'components/Throbber';
 import LayoutWrapper from 'components/LayoutWrapper';
 import PrimaryHeader from 'components/PrimaryHeader';
 import SecondaryHeader from 'components/SecondaryHeader';
@@ -27,34 +27,32 @@ const RedditComments = ({
   sortOldest,
   toggleUpvotePost
 }) => {
-  if (post) {
-    return (
-      <Loader loaded={!loading}>
-        <LayoutWrapper>
-          <PrimaryHeader
-            subreddit={post.subreddit}
-            commentsCount={commentsCount}
-          />
-          <section id="conversation">
-            <SecondaryHeader
-              sort={selectedSort}
-              votes={post.votes}
-              upvoted={post.upvoted}
-              onSortBest={sortBest}
-              onSortNewest={sortNewest}
-              onSortOldest={sortOldest}
-              onToggleUpvotePost={toggleUpvotePost}
-            />
-            <div id="posts">
-              <ReplyForm threadId={post.id} />
-              <Thread isRootThread threadId={post.id} />
-            </div>
-          </section>
-        </LayoutWrapper>
-      </Loader>
-    );
+  if (!post || loading) {
+    return <Throbber />;
   } else {
-    return null;
+    return (
+      <LayoutWrapper>
+        <PrimaryHeader
+          subreddit={post.subreddit}
+          commentsCount={commentsCount}
+        />
+        <section id="conversation">
+          <SecondaryHeader
+            sort={selectedSort}
+            votes={post.votes}
+            upvoted={post.upvoted}
+            onSortBest={sortBest}
+            onSortNewest={sortNewest}
+            onSortOldest={sortOldest}
+            onToggleUpvotePost={toggleUpvotePost}
+          />
+          <div id="posts">
+            <ReplyForm threadId={post.id} />
+            <Thread isRootThread threadId={post.id} />
+          </div>
+        </section>
+      </LayoutWrapper>
+    );
   }
 };
 
