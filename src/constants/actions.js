@@ -2,6 +2,10 @@ export const Setup = 'Setup';
 export const RedditPostIdHasChanged = 'RedditPostIdHasChanged';
 export const ChangeCommentCount = 'ChangeCommentCount';
 
+export const RedditPostDoNotExist = 'RedditPostDoNotExist';
+export const UserStartsPostingLinkToReddit = 'UserStartsPostingLinkToReddit';
+export const UserPostedLinkToReddit = 'UserPostedLinkToReddit';
+
 export const LogIn = 'LogIn';
 export const LoggedIn = 'LoggedIn';
 export const LogOutRequest = 'LogOutRequest';

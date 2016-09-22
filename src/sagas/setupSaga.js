@@ -13,22 +13,33 @@ import {
   fetchComments
 } from 'sagas/threadSaga';
 import {
-  getBestRedditPost
+  getBestRedditPost,
+  pollForBestRedditPost
 } from 'effects/redditAPI';
 import {
   getUrl
 } from 'selectors/setupSelectors';
 
 export default function* onSetup() {
-  yield fork(restoreSession);
-
   yield* withThrobber(function* () {
+    yield fork(restoreSession);
+
     const url = yield select(getUrl);
     const post = yield call(getBestRedditPost, url);
 
     if (post) {
       yield put(buildAction(Actions.RedditPostIdHasChanged, post.id));
       yield* fetchComments();
+    } else {
+      yield put(buildAction(Actions.RedditPostDoNotExist));
     }
   });
+}
+
+export function* onStartPostingLinkToReddit() {
+  const url = yield select(getUrl);
+  const post = yield call(pollForBestRedditPost, url);
+  yield put(buildAction(Actions.RedditPostIdHasChanged, post.id));
+  yield* fetchComments();
+  yield put(buildAction(Actions.UserPostedLinkToReddit));
 }

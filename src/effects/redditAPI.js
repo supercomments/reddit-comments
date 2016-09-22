@@ -6,6 +6,8 @@ import * as Sort from 'constants/sort';
 import { MsInSec } from 'constants/timing';
 import * as Entities from 'constants/entities';
 
+const PollingForRedditPostSubmittingInterval = 7000;
+
 const MapSortToRedditSort = {
   [Sort.Best]: 'top',
   [Sort.Newest]: 'new',
@@ -26,6 +28,8 @@ ApiSchema[Entities.Comment].define({
 ApiSchema[Entities.Post].define({
   comments: arrayOf(ApiSchema[Entities.Comment])
 });
+
+const wait = ms => new Promise(res => setTimeout(res, ms));
 
 // TODO: proper snoocore init
 const reddit = new Snoocore({
@@ -80,6 +84,16 @@ export const getBestRedditPost = url =>
       const sortedByScore = listing.data.children.sort((a, b) => b.data.score - a.data.score);
       return sortedByScore.length > 0 ? sortedByScore[0].data : null;
     });
+
+export const pollForBestRedditPost = url => getBestRedditPost(url)
+  .then((result) => {
+    if (result) {
+      return result;
+    } else {
+      return wait(PollingForRedditPostSubmittingInterval)
+        .then(() => pollForBestRedditPost(url));
+    }
+  });
 
 export const fetchComments = (postId, sort) =>
   reddit(`/comments/${postId}.json`)
