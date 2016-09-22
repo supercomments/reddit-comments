@@ -31,16 +31,19 @@ ApiSchema[Entities.Post].define({
 
 const wait = ms => new Promise(res => setTimeout(res, ms));
 
-// TODO: proper snoocore init
-const reddit = new Snoocore({
-  userAgent: 'supercomments',
-  oauth: {
-    type: 'implicit',
-    key: 'CRcRenqfbTCNLw',
-    redirectUri: 'http://localhost:3000',
-    scope: ['identity', 'read', 'submit', 'vote']
-  }
-});
+let reddit;
+
+export const initializeAPI = (key, redirectUri) => {
+  reddit = new Snoocore({
+    userAgent: 'supercomments',
+    oauth: {
+      type: 'implicit',
+      key,
+      redirectUri,
+      scope: ['identity', 'read', 'submit', 'vote']
+    }
+  });
+};
 
 const mapRedditReplies = replies => replies
   .filter(({ kind }) => kind === 't1' || kind === 'Listing')

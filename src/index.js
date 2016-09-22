@@ -5,7 +5,7 @@ const doRender = () => {
   const Root = require('./containers').default;
 
   render(
-    <Root url="http://google.com" />,
+    <Root consumerKey="CRcRenqfbTCNLw" redirectUri="http://localhost:3000" url="http://google.com" />,
     document.getElementById('root')
   );
 };

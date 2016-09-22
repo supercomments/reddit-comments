@@ -10,6 +10,8 @@ export default class Root extends Component {
 
   static propTypes = {
     url: PropTypes.string.isRequired,
+    consumerKey: PropTypes.string.isRequired,
+    redirectUri: PropTypes.string.isRequired,
     onChangeCommentCount: PropTypes.func
   }
 
@@ -18,12 +20,15 @@ export default class Root extends Component {
 
     const {
       url,
+      consumerKey,
+      redirectUri,
       onChangeCommentCount
     } = props;
 
     const store = configureStore();
     store.dispatch(buildAction(Actions.Setup, {
-      id: '52kejn',
+      consumerKey,
+      redirectUri,
       url,
       onChangeCommentCount
     }));

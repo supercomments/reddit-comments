@@ -1,16 +1,20 @@
-import { race, take, put, call } from 'redux-saga/effects';
+import { race, take, put, call, select } from 'redux-saga/effects';
 import moment from 'moment';
 
 import buildAction from 'helpers/buildAction';
 import * as Actions from 'constants/actions';
 import { RedditAuthenticated } from 'constants/windowMessageTypes';
-import { getAuthUrl, authenticate, tokenExpiration, logout } from 'effects/redditAPI';
+import { getAuthUrl, authenticate, tokenExpiration, logout, initializeAPI } from 'effects/redditAPI';
 import {
   openWindowAndWaitForMessage,
   saveToLocalStorage,
   restoreFromLocalStorage } from 'effects/windowEffects';
 import { withThrobber } from 'sagas/throbberSaga';
 import { fetchComments } from 'sagas/threadSaga';
+import {
+  getConsumerKey,
+  getRedirectUri
+} from 'selectors/setupSelectors';
 
 const AUTH_WINDOW_WIDTH = 1024;
 const AUTH_WINDOW_HEIGHT = 800;
@@ -23,6 +27,13 @@ function* clearRedditAuthInLocalStorage() {
 }
 
 const isTokenExpired = expires => moment() > moment(expires);
+
+export function* initializeApi() {
+  const consumerKey = yield select(getConsumerKey);
+  const redirectUri = yield select(getRedirectUri);
+
+  yield call(initializeAPI, consumerKey, redirectUri);
+}
 
 export function* restoreSession() {
   const data = yield call(restoreFromLocalStorage);

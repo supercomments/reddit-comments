@@ -3,6 +3,7 @@ import { fork } from 'redux-saga/effects';
 
 import * as Actions from 'constants/actions';
 import {
+  initializeApi,
   onLogin,
   onLoggedIn
 } from 'sagas/authenticationSaga';
@@ -19,6 +20,7 @@ import onSetup, { onStartPostingLinkToReddit } from 'sagas/setupSaga';
 export default function* () {
   yield [
     fork(changeCommentCountSaga),
+    fork(takeEvery, Actions.Setup, initializeApi),
     fork(takeEvery, Actions.Setup, onSetup),
     fork(takeEvery, Actions.LoggedIn, onLoggedIn),
     fork(takeEvery, Actions.LogIn, onLogin),

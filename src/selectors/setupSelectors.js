@@ -26,3 +26,15 @@ export const isCreatingPostOnReddit = createSelector(
   getSetup,
   setup => !!setup.creatingPostOnReddit
 );
+
+// Gets Reddit API consumer key
+export const getConsumerKey = createSelector(
+  getSetup,
+  setup => setup.consumerKey
+);
+
+// Gets Reddit API authentication reddirect URI
+export const getRedirectUri = createSelector(
+  getSetup,
+  setup => setup.redirectUri
+);
