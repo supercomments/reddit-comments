@@ -1,7 +1,7 @@
 import * as Actions from 'constants/actions';
 
 const initialState = {
-  postExistsOnReddit: true, // We optimistically assume that post already exist
+  postExistOnReddit: true, // We optimistically assume that post already exist
   creatingPostOnReddit: false
 };
 
@@ -27,7 +27,7 @@ export default (state = initialState, action) => {
     case Actions.RedditPostDoNotExist:
       return {
         ...state,
-        postExistsOnReddit: false
+        postExistOnReddit: false
       };
 
     case Actions.UserStartsPostingLinkToReddit:
@@ -39,7 +39,7 @@ export default (state = initialState, action) => {
     case Actions.UserPostedLinkToReddit:
       return {
         ...state,
-        postExistsOnReddit: true,
+        postExistOnReddit: true,
         creatingPostOnReddit: false
       };
 

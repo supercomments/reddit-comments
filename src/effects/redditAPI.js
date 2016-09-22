@@ -6,6 +6,8 @@ import * as Sort from 'constants/sort';
 import { MsInSec } from 'constants/timing';
 import * as Entities from 'constants/entities';
 
+const PollingForRedditPostSubmittingInterval = 7000;
+
 const MapSortToRedditSort = {
   [Sort.Best]: 'top',
   [Sort.Newest]: 'new',
@@ -88,7 +90,7 @@ export const pollForBestRedditPost = url => getBestRedditPost(url)
     if (result) {
       return result;
     } else {
-      return wait(7000)
+      return wait(PollingForRedditPostSubmittingInterval)
         .then(() => pollForBestRedditPost(url));
     }
   });
