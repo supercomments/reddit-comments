@@ -32,7 +32,10 @@ const ReplyForm = ({
   if (visible || root) {
     return (
       <div className={root ? 'textarea-wrapper--top-level' : 'reply-form-container'}>
-        <form className="reply expanded authenticated" onSubmit={error ? onRetry : onSubmit}>
+        <form
+          className={cx({ reply: true, expanded: true, authenticated })}
+          onSubmit={error ? onRetry : onSubmit}
+        >
           <div className="postbox">
             <div className="avatar">
               <a className="user">
@@ -104,6 +107,62 @@ const ReplyForm = ({
                )}
               </div>
             </div>
+            {root && (
+              <div className="login-form">
+                <div>
+                  <section className="auth-section logged-out">
+                    <div className="guest">
+                      <h6 className="guest-form-title">
+                        <span
+                          className="register-text"
+                        >Comments managed by&nbsp;
+                          <a
+                            href="https://github.com/supercomments/reddit-comments"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >reddit-comments&trade;</a>&nbsp;
+                          and hosted on&nbsp;
+                          <a
+                            href="https://www.reddit.com/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >reddit&copy;
+                          </a>
+                        </span>
+                      </h6>&nbsp;
+                      <div className="help-tooltip__wrapper help-icon">
+                        <div id="rules" className="tooltip show help-tooltip">
+                          <h3 className="help-tooltip__heading">Reddit is an online community where users vote on content</h3>
+                          <ul className="help-tooltip__list">
+                            <li>
+                              <span>We care about your privacy, and we never spam.</span>
+                            </li>
+                            <li>
+                              <span>By creating an account, you agree to reddit's</span>
+                              <a href="http://www.reddit.com/help/useragreement"> User Agreement </a>
+                              <span>and</span>
+                              <a href="http://www.reddit.com/help/privacypolicy"> Privacy Policy</a>
+                              <span>.</span>
+                            </li>
+                            <li>
+                              <span>We're proud of them, and you should read them.</span>
+                            </li>
+                          </ul>
+                          <p className="clearfix">
+                            <a
+                              href="http://www.reddit.com/help/useragreement"
+                              className="btn btn-small"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >Read full terms and conditions</a>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </div>
+            )}
           </div>
         </form>
       </div>
