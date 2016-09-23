@@ -31,7 +31,6 @@ export default {
     }),
   ],
   entry: [
-    'babel-polyfill',
     './src/containers/index.js'
   ],
   output: {

@@ -20,20 +20,22 @@ import {
   getUrl
 } from 'selectors/setupSelectors';
 
-export default function* onSetup() {
-  yield* withThrobber(function* () {
-    yield fork(restoreSession);
+export function* setup() {
+  yield fork(restoreSession);
 
-    const url = yield select(getUrl);
-    const post = yield call(getBestRedditPost, url);
+  const url = yield select(getUrl);
+  const post = yield call(getBestRedditPost, url);
 
-    if (post) {
-      yield put(buildAction(Actions.RedditPostIdHasChanged, post.id));
-      yield* fetchComments();
-    } else {
-      yield put(buildAction(Actions.RedditPostDoNotExist));
-    }
-  });
+  if (post) {
+    yield put(buildAction(Actions.RedditPostIdHasChanged, post.id));
+    yield* fetchComments();
+  } else {
+    yield put(buildAction(Actions.RedditPostDoNotExist));
+  }
+}
+
+export function* onSetup() {
+  yield* withThrobber(setup);
 }
 
 export function* onStartPostingLinkToReddit() {

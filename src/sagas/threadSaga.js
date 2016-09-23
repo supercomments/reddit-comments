@@ -21,11 +21,15 @@ export function* fetchComments() {
     result
   } = yield call(fetchCommentsAPI, redditId, sort);
 
+  const originalCommentsCount = yield select(getCommentsCount);
+
   yield put(buildAction(Actions.EntitiesHaveChanged, entities));
   yield put(buildAction(Actions.PostHasBeenLoaded, result));
 
   const commentsCount = yield select(getCommentsCount);
-  yield put(buildAction(Actions.ChangeCommentCount, commentsCount));
+  if (originalCommentsCount !== commentsCount) {
+    yield put(buildAction(Actions.ChangeCommentCount, commentsCount));
+  }
 }
 
 export function* fetchCommentsWithThrobber() {

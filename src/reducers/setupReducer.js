@@ -1,6 +1,7 @@
 import * as Actions from 'constants/actions';
 
-const initialState = {
+export const initialState = {
+  redditPostId: null,
   postExistOnReddit: true, // We optimistically assume that post already exist
   creatingPostOnReddit: false
 };
@@ -21,7 +22,7 @@ export default (state = initialState, action) => {
     case Actions.RedditPostIdHasChanged:
       return {
         ...state,
-        id: payload
+        redditPostId: payload
       };
 
     case Actions.RedditPostDoNotExist:

@@ -7,7 +7,6 @@ export default {
   target: 'web',
   devtool: 'sourcemap',
   entry: [
-    'babel-polyfill',
     'webpack-dev-server/client?http://localhost:3000',
     'webpack/hot/only-dev-server',
     './src/index.js'
@@ -29,6 +28,7 @@ export default {
   },
   resolve: {
     extensions: ['', '.js'],
+    root: path.resolve(__dirname, '../'),
     alias
   }
 };
